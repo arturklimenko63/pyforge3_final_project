@@ -1,29 +1,32 @@
 import sqlalchemy
-import pandas as pd
 
 class PostgresEngine:
     """Class to work with PostgreSQL"""
 
-    def __init__(self, host, port, db, user, password, schema):
+    def __init__(self, config, logger):
         """Class initialization"""
-        self.host = host
-        self.port = port
-        self.db = db
-        self.user = user
-        self.password = password
-        self.schema = schema
-        self.conn = sqlalchemy.create_engine(f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}", echo=True)
-        #self.conn.execute(f"DROP TABLE if exists public.compound")
+
+        self.host = config.host
+        self.port = config.port
+        self.db = config.db
+        self.user = config.user
+        self.password = config.password
+        self.schema = config.schema
+        self.conn = sqlalchemy.create_engine(f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}", echo=False)
+        self.logger = logger
+
+        self.conn.execute(f"CREATE TABLE IF NOT EXISTS compound ( \
+	                          compound_id varchar NOT NULL, \
+	                          name varchar NOT NULL, \
+	                          formula varchar NOT NULL, \
+	                          inchi text NULL, \
+	                          inchi_key varchar NULL, \
+	                          smiles varchar NULL, \
+	                          cross_links_count int4 NULL, \
+	                        CONSTRAINT compound_pkey PRIMARY KEY (compound_id))")
+
+    """the only 1 instance should exist"""
 
     def execute(self, execution_string):
         """execute transaction"""
         cur = self.conn.execute(execution_string)
-
-    def upload_data_into_table(self, table_name, input_df: pd.DataFrame):
-        """insert dataframe into the postgres table"""
-        try:
-            """to_sql "insert" approach"""
-            input_df.to_sql(table_name, con=self.conn, index=False, if_exists='append')
-        except Exception as e:
-            print(f"to_sql failed. Error: {e}")
-            raise
