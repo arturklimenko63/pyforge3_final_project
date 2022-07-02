@@ -15,6 +15,9 @@ class GetData:
     """Put data from url into array"""
     responses = []
 
+    """Result of running function get_data_by_url for unit tests"""
+    function_result = 0
+
     async def get_data_by_url(self, ioloop, Url):
         try:
             self.logger.info(f"getting data from {Url} started: {format(tic())}")
@@ -22,9 +25,10 @@ class GetData:
             self.responses.append(response.text)
             await asyncio.sleep(self.requests_per_second)
             self.logger.info(f"getting data from {Url} finished: {format(tic())}")
+            self.function_result = 0
         except Exception as e:
             self.logger.error(f"get_data_by_url failed. Error: {e}")
-            #raise
+            self.function_result = -1
 
     def start_get_data(self):
         ioloop = asyncio.get_event_loop()

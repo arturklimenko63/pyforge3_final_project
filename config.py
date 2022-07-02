@@ -25,9 +25,9 @@ customize_processing_function: str = 'parse_df'
 
 """section: Postgres_config, vonnection parameters to postgres DB"""
 host = 'localhost'
-port = '5436'
+port = '5432'
 db   = 'postgres'
-user = 'postgres'
-password = 'diana'
+user = 'test'
+password = 'test'
 schema   = 'public'
 
