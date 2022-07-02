@@ -2,11 +2,14 @@
 """List of compounds sources to obtain"""
 urls = [
     'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/ATP',
-    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/ADPsafffsdff'
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/ADP',
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/STI',
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/ZID',
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/DPM',
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/XP9',
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/18W',
+    'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/29P'
 ]
-
-
-
 
 """Parameter to restrict number of http requests per second"""
 requests_per_second = 1
