@@ -1,9 +1,11 @@
+import sys
+sys.path.insert(0, '..')
+
 from get_json_data import GetData
 import config
 from logger import Logger
 
 import pytest
-
 
 @pytest.mark.asyncio
 async def test_get_data_by_url_right():
@@ -14,7 +16,7 @@ async def test_get_data_by_url_right():
     json_data.responses = []
 
     await json_data.get_data_by_url(None, 'https://www.ebi.ac.uk/pdbe/graph-api/compound/summary/ATP')
-    assert json_data.responses[0].find("ATP") != -1
+    assert json_data.is_any_responses_loaded()
 
 
 @pytest.mark.asyncio
@@ -26,7 +28,7 @@ async def test_get_data_by_url_wrong():
     json_data.responses = []
 
     await json_data.get_data_by_url(None, 'http://sdfssg')
-    assert len(json_data.responses) == 0
+    assert not json_data.is_any_responses_loaded()
 
 @pytest.mark.asyncio
 async def test_get_data_by_url_empty_url():
@@ -37,4 +39,5 @@ async def test_get_data_by_url_empty_url():
     json_data.responses = []
 
     await json_data.get_data_by_url(None, '')
-    assert len(json_data.responses) == 0
+    assert not json_data.is_any_responses_loaded()
+

@@ -13,7 +13,7 @@ json_data = get_json_data.GetData(config, logger)
 
 """Get data from number of urls specified in config.py"""
 json_data.start_get_data()
-if json_data.function_result == -1:
+if not json_data.is_any_responses_loaded():
     exit()
 
 """Instantiate of connection to Postgres"""

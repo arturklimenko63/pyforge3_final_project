@@ -3,6 +3,7 @@ import requests
 
 from utils import tic
 
+
 class GetData:
     """Class to obtain jsons from https://www.ebi.ac.uk"""
 
@@ -15,20 +16,21 @@ class GetData:
     """Put data from url into array"""
     responses = []
 
-    """Result of running function get_data_by_url for unit tests"""
-    function_result = 0
-
     async def get_data_by_url(self, ioloop, Url):
         try:
             self.logger.info(f"getting data from {Url} started: {format(tic())}")
             response = requests.get(Url)
-            self.responses.append(response.text)
+            if response.status_code == 200:
+                self.responses.append(response.text)
+                v_result = 0
+            else:
+                v_result = -1
             await asyncio.sleep(self.requests_per_second)
             self.logger.info(f"getting data from {Url} finished: {format(tic())}")
-            self.function_result = 0
+            return v_result
         except Exception as e:
             self.logger.error(f"get_data_by_url failed. Error: {e}")
-            self.function_result = -1
+            return -1
 
     def start_get_data(self):
         ioloop = asyncio.get_event_loop()
@@ -36,3 +38,6 @@ class GetData:
         ioloop.run_until_complete(asyncio.wait(tasks))
         ioloop.close()
 
+
+    def is_any_responses_loaded(self):
+        return len(self.responses) > 0
