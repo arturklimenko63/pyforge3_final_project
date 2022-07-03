@@ -24,6 +24,6 @@ process_data = process_jsons.ProcessJsonData(json_data.responses, config, pg_con
 process_data.process()
 
 """Report compounds"""
-report = reports.Reports(config, pg_connection)
+report = reports.Reports(config, logger, pg_connection)
 report.compounds_report()
 

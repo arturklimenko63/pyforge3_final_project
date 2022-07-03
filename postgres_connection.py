@@ -23,8 +23,4 @@ class PostgresEngine:
 
     """execute transaction"""
     def execute(self, execution_string):
-        try:
-            self.conn.execute(execution_string)
-        except Exception as e:
-            self.logger.error(f"PostgresEngine.execute failed. Error: {e}")
-            raise
+        self.conn.execute(execution_string)

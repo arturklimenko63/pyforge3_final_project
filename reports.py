@@ -1,19 +1,23 @@
 import pandas as pd
 
 
-class Reports():
+class Reports:
     """Class to work with reports"""
 
-    def __init__(self, config, pg_connection):
+    def __init__(self, config, logger, pg_connection):
         """Class initialization"""
 
+        self.config = config
+        self.logger = logger
+        self.pg_connection = pg_connection
+
+    def compounds_report(self):
         try:
-            self.pg_connection = pg_connection
-            self.pg_connection.conn.execute(config.view_ddl)
+            """Check if view_ddl exists"""
+            self.pg_connection.conn.execute(self.config.view_ddl)
+            df = pd.read_sql(self.config.view_select, self.pg_connection.conn)
+            print(df.to_markdown())
         except Exception as e:
             self.logger.error(f"Reports.__init__ failed. Error: {e}")
             raise
 
-    def compounds_report(self):
-        df = pd.read_sql("select * from v_compound", self.pg_connection.conn)
-        print(df.to_markdown())

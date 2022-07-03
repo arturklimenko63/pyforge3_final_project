@@ -77,3 +77,5 @@ view_ddl = "CREATE OR REPLACE VIEW v_compound \
                                        END AS smiles, \
                                        cross_links_count \
                                   FROM compound"
+
+view_select = "select * from v_compound"
