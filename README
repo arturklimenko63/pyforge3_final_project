@@ -20,7 +20,7 @@
 6. switch again to venv command line session and run the program
    1. cd ..
    2. python main.py
-   as result the app will print the compounds in a nice view.
+   as result the app will print the compounds in the Tabulate shape.
 
 7. from the test folder run tests
    1. cd test
@@ -33,4 +33,5 @@ A few words about the program itself.
 The app is fully managed by config.py module where you can specify your own params as well as a procedure which
 is going to parse of input jsons, considering the variety forms of it.
 For instance for next jsons which are more complex, you can write a new function and specify its name in the config.py
-
+Logger by default writes events into the file specified in config.py. If this param is an empty string it will put
+its messages into console.

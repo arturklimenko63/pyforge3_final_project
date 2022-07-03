@@ -21,7 +21,7 @@ logger_file_name = 'app.log'
 table_name: str = 'compound'
 table_columns: [] = ['compound_id', 'name', 'formula', 'inchi', 'inchi_key', 'smiles', 'cross_links_count']
 record_path: [] = None
-customize_processing_function: str = 'parse_df'
+customize_processing_function: str = 'parse_and_upload_df'
 
 """section: Postgres_config, vonnection parameters to postgres DB"""
 host = 'localhost'
@@ -31,3 +31,49 @@ user = 'test'
 password = 'test'
 schema   = 'public'
 
+table_ddl = "CREATE TABLE IF NOT EXISTS compound ( \
+                 compound_id varchar NOT NULL, \
+                 name varchar NOT NULL, \
+                 formula varchar NOT NULL, \
+                 inchi text NULL, \
+                 inchi_key varchar NULL, \
+                 smiles varchar NULL, \
+                 cross_links_count int4 NULL, \
+                 CONSTRAINT compound_pkey PRIMARY KEY (compound_id))"
+
+"""section: Reports"""
+view_ddl = "CREATE OR REPLACE VIEW v_compound \
+                                as \
+                                SELECT compound_id, \
+                                       CASE \
+                                         WHEN length(name) > 10 THEN \
+                                           substr(name, 1, 10) || '...' \
+                                         ELSE  \
+                                           name \
+                                       END AS name, \
+                                       CASE  \
+                                         WHEN length(formula) > 10 THEN \
+                                           substr(formula, 1, 10) || '...' \
+                                         ELSE  \
+                                           formula \
+                                       END AS formula, \
+                                       CASE  \
+                                         WHEN length(inchi) > 10 THEN \
+                                           substr(inchi, 1, 10) || '...' \
+                                         ELSE  \
+                                           inchi \
+                                       END AS inchi, \
+                                       CASE  \
+                                         WHEN length(inchi_key) > 10 THEN \
+                                           substr(inchi_key, 1, 10) || '...' \
+                                         ELSE  \
+                                           inchi_key \
+                                       END AS inchi_key, \
+                                       CASE  \
+                                         WHEN length(smiles) > 10 THEN \
+                                           substr(smiles, 1, 10) || '...' \
+                                         ELSE  \
+                                           smiles \
+                                       END AS smiles, \
+                                       cross_links_count \
+                                  FROM compound"

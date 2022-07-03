@@ -1,5 +1,6 @@
 import logging
 
+
 class Logger(object):
     """Class for logging"""
 
@@ -31,7 +32,11 @@ class Logger(object):
         return self._instance
 
     def error(self, message):
+        """Log error message"""
+
         logging.error(message)
 
     def info(self, message):
+
+        """Log info message"""
         logging.info(message)

@@ -1,9 +1,15 @@
 import json
 import pandas as pd
 
+import config
+
+
 class ProcessJsonData:
+    """Class to process json content, (parse + upload into DB)"""
+
     def __init__(self, json_data, config, pg_connection, logger):
         """Class initialization"""
+
         self.json_data = json_data
         self.config = config
         self.logger = logger
@@ -11,6 +17,10 @@ class ProcessJsonData:
 
     def process(self):
         try:
+            """Check if exists the table"""
+            self.pg_connection.conn.execute(config.table_ddl)
+
+            """Process content (parse + upload into DB)"""
             for i in self.json_data:
                 json_data_tmp = json.loads(i)
                 method = getattr(self, self.config.customize_processing_function)
@@ -22,9 +32,11 @@ class ProcessJsonData:
             self.logger.error(f"ProcessJsonData.process failed. Error: {e}")
             raise
 
-    """this function is specified from config parameter. If we need to process more comple[ json we define another function"""
-    def parse_df(self, json_data):
+    """this function is specified from config parameter. If we need to process more complex json we define another 
+    function """
+    def parse_and_upload_df(self, json_data):
         try:
+            """Parse json"""
             parsed_df = pd.json_normalize(json_data, record_path=self.config.record_path)
             compound_id = parsed_df.columns[0]
             parsed_df_transpose = parsed_df.transpose()
@@ -38,14 +50,17 @@ class ProcessJsonData:
                     final_df.drop(i, axis=1, inplace=True)
             final_df.insert(0, 'compound_id', compound_id)
             final_df['cross_links_count'] = cross_links_count
+
+            """Upload final dataframe into DB"""
             self.upload_data_into_table(self.config.table_name, final_df)
+
             self.logger.info(f"compound_id: {compound_id} loaded into '{self.config.table_name}' table.")
         except Exception as e:
             self.logger.error(f"ProcessJsonData.parse_df failed. Error: {e}")
             raise
 
     def upload_data_into_table(self, table_name, input_df: pd.DataFrame):
-        """insert dataframe into the postgres table"""
+        """Upload dataframe into a postgres table"""
         try:
             """to_sql "insert" approach"""
             input_df.to_sql(table_name, con=self.pg_connection.conn, index=False, if_exists='append')
