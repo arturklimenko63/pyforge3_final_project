@@ -1,11 +1,11 @@
 import sys
-sys.path.insert(0, '..')
+import pytest
 
 from get_json_data import GetData
 import config
 from logger import Logger
 
-import pytest
+sys.path.insert(0, '..')
 
 @pytest.mark.asyncio
 async def test_get_data_by_url_right():
@@ -30,6 +30,7 @@ async def test_get_data_by_url_wrong():
     await json_data.get_data_by_url(None, 'http://sdfssg')
     assert not json_data.is_any_responses_loaded()
 
+
 @pytest.mark.asyncio
 async def test_get_data_by_url_empty_url():
     logger = Logger(config.logger_file_name)
@@ -40,4 +41,3 @@ async def test_get_data_by_url_empty_url():
 
     await json_data.get_data_by_url(None, '')
     assert not json_data.is_any_responses_loaded()
-

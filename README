@@ -1,0 +1,30 @@
+1. Create a separate repository folder for the project using the following commands:
+   git init
+   git clone https://github.com/arturklimenko63/pyforge3_final_project
+
+2. cd pyforge3_final_project
+
+3. create virtual python environment in command line(avoid using Far:)) as the following:
+   1. python -m venv venv
+   2. venv\Scripts\activate
+
+4. install all required libraries for python specified in the requirements.txt
+   1. ip install -r docker\requirements.txt
+   2. check whether install went ok, for instance: pip show tabulate
+
+5. From a separate command line session run an instance of PostgreSQL using the docker container:
+   1. cd docker
+   2. docker compose up
+   3. check whether it's ready using DBeaver. Connection parameters specified in the python module - config.py
+
+6. switch again to venv command line session and run the program
+   1. cd ..
+   2. python main.py
+   as result the app will print the compounds in a nice view.
+
+7. from the test folder run tests
+   1. cd test
+   2. pytest
+
+8. In the second session with postgresql down the instance of postgresql, just Ctrl+C.
+   At the same time, the directory with the PG_Data data must be deleted as it specified in docker-compose.yml
