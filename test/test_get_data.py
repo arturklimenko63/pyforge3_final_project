@@ -9,6 +9,8 @@ sys.path.insert(0, '..')
 
 @pytest.mark.asyncio
 async def test_get_data_by_url_right():
+    """Check right parameter"""
+
     logger = Logger(config.logger_file_name)
     json_data = GetData(config, logger)
     json_data.requests_per_second = 1
@@ -21,6 +23,8 @@ async def test_get_data_by_url_right():
 
 @pytest.mark.asyncio
 async def test_get_data_by_url_wrong():
+    """Check wrong parameter"""
+
     logger = Logger(config.logger_file_name)
     json_data = GetData(config, logger)
     json_data.requests_per_second = 1
@@ -33,6 +37,8 @@ async def test_get_data_by_url_wrong():
 
 @pytest.mark.asyncio
 async def test_get_data_by_url_empty_url():
+    """Check empty parameter"""
+
     logger = Logger(config.logger_file_name)
     json_data = GetData(config, logger)
     json_data.requests_per_second = 1

@@ -28,3 +28,9 @@
 
 8. In the second session with postgresql down the instance, just Ctrl+C.
    At the same time, the directory with the PG_Data data must be deleted as it specified in docker-compose.yml
+
+A few words about the program itself.
+The app is fully managed by config.py module where you can specify your own params as well as a procedure which
+is going to parse of input jsons, considering the variety forms of it.
+For instance for next jsons which are more complex, you can write a new function and specify it in the config.py
+
