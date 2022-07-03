@@ -32,5 +32,5 @@
 A few words about the program itself.
 The app is fully managed by config.py module where you can specify your own params as well as a procedure which
 is going to parse of input jsons, considering the variety forms of it.
-For instance for next jsons which are more complex, you can write a new function and specify it in the config.py
+For instance for next jsons which are more complex, you can write a new function and specify its name in the config.py
 
