@@ -9,6 +9,7 @@ class GetData:
 
     def __init__(self, config, logger):
         """Class initialization"""
+
         self.urls = config.urls
         self.requests_per_second = config.requests_per_second
         self.logger = logger
@@ -16,6 +17,7 @@ class GetData:
     """Put data from url into array"""
     responses = []
 
+    """Obtain json data from Url specified in config.py"""
     async def get_data_by_url(self, ioloop, Url):
         try:
             self.logger.info(f"getting data from {Url} started: {format(tic())}")
@@ -32,12 +34,13 @@ class GetData:
             self.logger.error(f"get_data_by_url failed. Error: {e}")
             return -1
 
+    """Form and execute asyncio tasks queue"""
     def start_get_data(self):
         ioloop = asyncio.get_event_loop()
         tasks = [self.get_data_by_url(ioloop, i) for i in self.urls]
         ioloop.run_until_complete(asyncio.wait(tasks))
         ioloop.close()
 
-
+    """Check if there is something to process"""
     def is_any_responses_loaded(self):
         return len(self.responses) > 0

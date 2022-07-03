@@ -21,10 +21,10 @@ class PostgresEngine:
             self.logger.error(f"PostgresEngine.__init__ failed. Error: {e}")
             raise
 
+    """execute transaction"""
     def execute(self, execution_string):
         try:
-            """execute transaction"""
-            cur = self.conn.execute(execution_string)
+            self.conn.execute(execution_string)
         except Exception as e:
             self.logger.error(f"PostgresEngine.execute failed. Error: {e}")
             raise

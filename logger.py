@@ -31,12 +31,10 @@ class Logger(object):
             self._instance = super(Logger, self).__new__(self, *args, **kwargs)
         return self._instance
 
+    """Log error message"""
     def error(self, message):
-        """Log error message"""
-
         logging.error(message)
 
+    """Log info message"""
     def info(self, message):
-
-        """Log info message"""
         logging.info(message)
