@@ -9,7 +9,7 @@
    2. venv\Scripts\activate
 
 4. install all required libraries for python specified in the requirements.txt
-   1. ip install -r docker\requirements.txt
+   1. pip install -r docker\requirements.txt
    2. check whether install went ok, for instance: pip show tabulate
 
 5. From a separate command line session run an instance of PostgreSQL using the docker container:
