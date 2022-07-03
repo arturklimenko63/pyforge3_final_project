@@ -26,5 +26,5 @@
    1. cd test
    2. pytest
 
-8. In the second session with postgresql down the instance of postgresql, just Ctrl+C.
+8. In the second session with postgresql down the instance, just Ctrl+C.
    At the same time, the directory with the PG_Data data must be deleted as it specified in docker-compose.yml
