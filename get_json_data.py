@@ -10,7 +10,8 @@ class GetData:
     def __init__(self, config, logger):
         """Class initialization"""
 
-        self.urls = config.urls
+        self.url = config.url
+        self.compounds = config.compounds
         self.requests_per_second = config.requests_per_second
         self.logger = logger
 
@@ -37,7 +38,7 @@ class GetData:
     """Form and execute asyncio tasks queue"""
     def start_get_data(self):
         ioloop = asyncio.get_event_loop()
-        tasks = [self.get_data_by_url(ioloop, i) for i in self.urls]
+        tasks = [self.get_data_by_url(ioloop, self.url + i) for i in self.compounds]
         ioloop.run_until_complete(asyncio.wait(tasks))
         ioloop.close()
 

@@ -7,15 +7,8 @@ class Logger(object):
     def __init__(self, logger_file_name):
         """Class initialization"""
 
-        if logger_file_name:
-            logging.basicConfig(
-                filename='app.log',
-                filemode='w',
-                level=logging.INFO,
-                format='%(asctime)s.%(msecs)d: %(levelname)s-%(message)s',
-                datefmt='%Y-%m-%d %H:%M:%S')
-        else:
-            logging.basicConfig(
+        logging.basicConfig(
+                filename=logger_file_name,
                 filemode='w',
                 level=logging.INFO,
                 format='%(asctime)s.%(msecs)d: %(levelname)s-%(message)s',
